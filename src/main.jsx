@@ -7,6 +7,7 @@ import KhoaVienPage from "./pages/admin/khoavien.jsx";
 import ClassPage from "./pages/admin/class.jsx";
 import StudentPage from "./pages/admin/student.jsx";
 import SubjectPage from "./pages/admin/subject.jsx";
+import TeacherPage from "./pages/admin/teacher.jsx";
 
 // Thêm các component tạm thời nếu chưa có
 const ErrorPage = () => <div>404 Not Found</div>;
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/subject",
         element: <SubjectPage />,
+      },
+      {
+        path: "/teacher",
+        element: <TeacherPage />,
       },
     ],
   },

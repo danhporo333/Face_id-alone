@@ -1,6 +1,5 @@
 import { Button, Input, Modal, notification } from "antd";
 import { useState, useEffect } from "react";
-import { UploadOutlined } from "@ant-design/icons";
 import { createKhoaVien } from "../../../services/api.service";
 
 const KhoavienForm = (props) => {

@@ -162,6 +162,40 @@ const deleteSubject = (mamh) => {
   return axios.delete(URL_BACKEND);
 };
 
+// ------------------------------------------------ API TEACHER ------------------------------------------------
+const createTeacher = (hoGV, tenGV, dt_gv, donVi) => {
+  const URL_BACKEND = `/v1/api/createteacher`;
+  const data = {
+    hoGV: hoGV,
+    tenGV: tenGV,
+    dt_gv: dt_gv,
+    donVi: donVi,
+  };
+  return axios.post(URL_BACKEND, data);
+};
+
+const fetchAllTeachers = (current, pageSize) => {
+  const URL_BACKEND = `/v1/api/allteachers?current=${current}&pageSize=${pageSize}`;
+  return axios.get(URL_BACKEND);
+};
+
+const updateTeacher = (mgv, hoGV, tenGV, dt_gv, donVi) => {
+  const URL_BACKEND = "/v1/api/updateteacher";
+  const data = {
+    mgv: mgv,
+    hoGV: hoGV,
+    tenGV: tenGV,
+    dt_gv: dt_gv,
+    donVi: donVi,
+  };
+  return axios.put(URL_BACKEND, data);
+};
+
+const deleteTeacher = (mgv) => {
+  const URL_BACKEND = `/v1/api/deleteteacher/${mgv}`;
+  return axios.delete(URL_BACKEND);
+};
+
 export {
   fetchAllKhoaVien,
   createKhoaVien,
@@ -180,4 +214,8 @@ export {
   fetchAllSubjects,
   updateSubject,
   deleteSubject,
+  createTeacher,
+  fetchAllTeachers,
+  updateTeacher,
+  deleteTeacher,
 };

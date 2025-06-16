@@ -67,6 +67,7 @@ const pathToKey = (pathname) => {
   if (pathname.startsWith("/class")) return "class";
   if (pathname.startsWith("/student")) return "student";
   if (pathname.startsWith("/subject")) return "subject";
+  if (pathname.startsWith("/teacher")) return "teacher";
   return "";
 };
 
