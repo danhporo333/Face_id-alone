@@ -1,0 +1,98 @@
+.home-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.welcome-message {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.welcome-message h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #25344e;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  font-weight: bold;
+  color: #f39c12;
+  margin-bottom: 12px;
+}
+
+.welcome-text {
+  margin: 0 8px;
+  padding: 12px 32px;
+  background: linear-gradient(90deg, #2980b9 0%, #f39c12 100%);
+  color: #fff;
+  border-radius: 32px;
+  font-size: 2.2rem;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(41, 128, 185, 0.08);
+  letter-spacing: 2px;
+}
+
+.university-logo {
+  text-align: center;
+  margin-top: 24px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(41, 128, 185, 0.1);
+  padding: 24px 32px;
+  display: inline-block;
+}
+
+.university-logo img {
+  margin: 0 12px 12px 12px;
+  vertical-align: middle;
+  max-width: 120px;
+  max-height: 80px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(41, 128, 185, 0.08));
+}
+
+.university-logo h2 {
+  color: #2980b9;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    padding: 12px;
+  }
+  .welcome-message h1 {
+    font-size: 1.3rem;
+  }
+  .welcome {
+    font-size: 2rem;
+  }
+  .welcome-text {
+    font-size: 1.2rem;
+    padding: 8px 16px;
+  }
+  .university-logo {
+    padding: 12px 8px;
+  }
+  .university-logo img {
+    max-width: 80px;
+    max-height: 48px;
+  }
+  .university-logo h2 {
+    font-size: 1.1rem;
+  }
+}
