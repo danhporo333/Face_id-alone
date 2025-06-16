@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import ClassTable from "../../components/class/class.table";
-import ClassForm from "../../components/class/class.form";
+import ClassTable from "../../components/admin/class/class.table.jsx";
+import ClassForm from "../../components/admin/class/class.form";
 import { fetchAllClass } from "../../services/api.service.js";
 import "../../style/admin/class.css";
 

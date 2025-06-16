@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import SubjectForm from "../../components/Subject/subject.form";
-import SubjectTable from "../../components/Subject/subject.table";
+import SubjectForm from "../../components/admin/Subject/subject.form";
+import SubjectTable from "../../components/admin/Subject/subject.table";
 import { fetchAllSubjects } from "../../services/api.service";
 import "../../style/admin/subject.css";
 

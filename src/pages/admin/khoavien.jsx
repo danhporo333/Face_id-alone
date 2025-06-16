@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import KhoavienForm from "../../components/KhoaVien/khoavien.form.jsx";
-import KhoavienTable from "../../components/KhoaVien/khoavien.table";
+import KhoavienForm from "../../components/admin/KhoaVien/khoavien.form.jsx";
+import KhoavienTable from "../../components/admin/KhoaVien/khoavien.table";
 import { fetchAllKhoaVien } from "../../services/api.service.js";
 import "../../style/admin/khoavien.css";
 
