@@ -25,7 +25,6 @@ const ClassPage = () => {
     }
   };
 
-  console.log("Current page:", current);
   return (
     <div className="class-table-container">
       <div className="class-table-title">Quản lý lớp</div>

@@ -196,6 +196,21 @@ const deleteTeacher = (mgv) => {
   return axios.delete(URL_BACKEND);
 };
 
+// ------------------------------------------------ API LOGIN ------------------------------------------------
+const login = (username, password) => {
+  const URL_BACKEND = "/v1/api/login";
+  const data = {
+    username: username,
+    password: password,
+  };
+  return axios.post(URL_BACKEND, data);
+};
+
+const getAccountAPI = () => {
+  const URL_BACKEND = "/v1/api/verify-token";
+  return axios.get(URL_BACKEND);
+};
+
 export {
   fetchAllKhoaVien,
   createKhoaVien,
@@ -218,4 +233,6 @@ export {
   fetchAllTeachers,
   updateTeacher,
   deleteTeacher,
+  login,
+  getAccountAPI,
 };

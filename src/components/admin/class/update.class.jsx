@@ -23,7 +23,6 @@ const UpdateClass = ({
       setkhoaVien(selectedClass.makv); // sửa lại tên hàm setkhoaVien
     }
   }, [selectedClass]);
-  console.log("selectedClass", nameClass);
 
   useEffect(() => {
     const loadKhoaVien = async () => {
