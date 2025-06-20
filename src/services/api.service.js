@@ -211,6 +211,11 @@ const getAccountAPI = () => {
   return axios.get(URL_BACKEND);
 };
 
+// ------------------------------------------------ lấy tkb theo tài khoản ------------------------------------------------
+const getTimetableByAccount = () => {
+  const URL_BACKEND = `/v1/api/lich-hoc-ca-nhan`;
+  return axios.get(URL_BACKEND);
+};
 export {
   fetchAllKhoaVien,
   createKhoaVien,
@@ -235,4 +240,5 @@ export {
   deleteTeacher,
   login,
   getAccountAPI,
+  getTimetableByAccount,
 };

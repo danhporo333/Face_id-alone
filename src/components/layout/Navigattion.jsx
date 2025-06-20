@@ -89,11 +89,16 @@ const Navigation = ({ collapsed, setCollapsed }) => {
           },
         ]
       : []),
-    {
-      key: "timetable",
-      icon: <ApartmentOutlined />,
-      label: <Link to={"/timetable"}>Thời khóa biểu</Link>,
-    },
+    ...(isStudent
+      ? [
+          {
+            key: "timetable",
+            icon: <ApartmentOutlined />,
+            label: <Link to={"/timetable"}>Thời khóa biểu</Link>,
+          },
+        ]
+      : []),
+
     {
       label: `Welcome ${user.username}`,
       icon: <AliwangwangOutlined />,
@@ -106,7 +111,6 @@ const Navigation = ({ collapsed, setCollapsed }) => {
         },
       ],
     },
-    // { key: "logout", icon: <LogoutOutlined />, label: "Logout" },
   ];
 
   return (
