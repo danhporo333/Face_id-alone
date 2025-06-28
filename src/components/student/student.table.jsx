@@ -3,18 +3,25 @@ import { Card, Tag, Row, Col, Button, Spin, notification } from "antd";
 import {
   CalendarOutlined,
   ClockCircleOutlined,
-  EnvironmentOutlined,
   LeftOutlined,
   RightOutlined,
 } from "@ant-design/icons";
 import { getTimetableByAccount } from "../../services/api.service";
 import "../../style/student/timetable.css";
+import TimetableDetail from "./TimetableDetail.jsx"; // Import the detail component
 
 const TimetableTable = () => {
   const [currentWeek, setCurrentWeek] = useState(0);
   const [allData, setAllData] = useState([]); // raw tkbs
   const [weekData, setWeekData] = useState([]); // filtered
   const [loading, setLoading] = useState(true);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [selectedTimetable, setSelectedTimetable] = useState(null);
+
+  const handleCardClick = (item) => {
+    setSelectedTimetable(item);
+    setIsDetailOpen(true);
+  };
 
   useEffect(() => {
     fetchData();
@@ -24,7 +31,7 @@ const TimetableTable = () => {
     filterWeek();
   }, [currentWeek, allData]);
 
-  async function fetchData() {
+  const fetchData = async () => {
     try {
       setLoading(true);
       const res = await getTimetableByAccount();
@@ -49,7 +56,7 @@ const TimetableTable = () => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   // parse "DD/MM/YYYY" thành Date
   const parse = (s) => {
@@ -114,7 +121,13 @@ const TimetableTable = () => {
       <div className="timetable-cards">
         {weekData.length ? (
           weekData.map((it) => (
-            <Card key={it.id} className="timetable-card" bordered={false}>
+            <Card
+              key={it.id}
+              className="timetable-card"
+              bordered={false}
+              onClick={() => handleCardClick(it)}
+              style={{ cursor: "pointer" }}
+            >
               <Row gutter={[16, 8]} align="middle">
                 <Col span={6}>
                   <Tag color="blue">
@@ -131,9 +144,6 @@ const TimetableTable = () => {
                 >
                   Phòng: {it.room}
                 </Col>
-                {/* <Col span={2}>
-                  <EnvironmentOutlined /> {it.teacher}
-                </Col> */}
               </Row>
             </Card>
           ))
@@ -144,6 +154,11 @@ const TimetableTable = () => {
           </div>
         )}
       </div>
+      <TimetableDetail
+        isDetailOpen={isDetailOpen}
+        setIsDetailOpen={setIsDetailOpen}
+        selectedTimetable={selectedTimetable}
+      />
     </div>
   );
 };

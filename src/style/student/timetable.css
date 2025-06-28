@@ -124,3 +124,23 @@
     text-align: center;
   }
 }
+
+.timetable-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  border-left: 4px solid #1890ff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer !important; /* Đảm bảo cursor pointer */
+}
+
+.timetable-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Active state khi click */
+.timetable-card:active {
+  transform: translateY(-1px);
+}
