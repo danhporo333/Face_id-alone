@@ -1,5 +1,5 @@
 import { Button, Form, Input, notification, Divider, message } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { MailOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { login } from "../services/api.service";
 import { useContext, useState } from "react";
@@ -9,6 +9,7 @@ const LoginPage = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { setUser } = useContext(AuthContext);
 
   const onFinish = async (values) => {
@@ -17,6 +18,7 @@ const LoginPage = () => {
     if (res.data) {
       message.success("Đăng nhập thành công");
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("mssv", res.data.user.sinhVien.mssv);
       setUser(res.data.user);
       navigate("/");
     } else {

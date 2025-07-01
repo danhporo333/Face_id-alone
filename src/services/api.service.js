@@ -216,6 +216,22 @@ const getTimetableByAccount = () => {
   const URL_BACKEND = `/v1/api/lich-hoc-ca-nhan`;
   return axios.get(URL_BACKEND);
 };
+
+// ------------------------------------------------ API ĐIỂM DANH ------------------------------------------------
+const submitAttendanceAPI = (tkbId, mssv) => {
+  const URL_BACKEND = "/v1/api/diemdanh/faceid";
+  const data = {
+    mssv: mssv,
+    tkbId: tkbId,
+  };
+  return axios.post(URL_BACKEND, data);
+};
+
+// ------------------------------------------------ lấy thông tin sinh viên theo mã ------------------------------------------------
+const getStudentById = (mssv) => {
+  const URL_BACKEND = `/v1/api/student/${mssv}`;
+  return axios.get(URL_BACKEND);
+};
 export {
   fetchAllKhoaVien,
   createKhoaVien,
@@ -241,4 +257,6 @@ export {
   login,
   getAccountAPI,
   getTimetableByAccount,
+  submitAttendanceAPI,
+  getStudentById,
 };

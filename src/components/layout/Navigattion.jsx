@@ -42,6 +42,7 @@ const Navigation = ({ collapsed, setCollapsed }) => {
       role: "",
     });
     localStorage.removeItem("token");
+    localStorage.removeItem("mssv");
     navigate("/login");
   };
 
@@ -88,6 +89,18 @@ const Navigation = ({ collapsed, setCollapsed }) => {
             icon: <CalendarOutlined />,
             label: <Link to={"/timetable"}>thời khóa biểu</Link>,
           },
+          {
+            label: `welcome ${user.username}`,
+            icon: <AliwangwangOutlined />,
+            children: [
+              {
+                label: "Đăng xuất",
+                key: "logout",
+                icon: <LoginOutlined />,
+                onClick: handleLogout,
+              },
+            ],
+          },
         ]
       : []),
     ...(isStudent
@@ -97,21 +110,20 @@ const Navigation = ({ collapsed, setCollapsed }) => {
             icon: <ApartmentOutlined />,
             label: <Link to={"/timetable"}>Thời khóa biểu</Link>,
           },
+          {
+            label: `${user.holot} ${user.ten}`,
+            icon: <AliwangwangOutlined />,
+            children: [
+              {
+                label: "Đăng xuất",
+                key: "logout",
+                icon: <LoginOutlined />,
+                onClick: handleLogout,
+              },
+            ],
+          },
         ]
       : []),
-
-    {
-      label: `Welcome ${user.username}`,
-      icon: <AliwangwangOutlined />,
-      children: [
-        {
-          label: "Đăng xuất",
-          key: "logout",
-          icon: <LoginOutlined />,
-          onClick: handleLogout,
-        },
-      ],
-    },
   ];
 
   return (
