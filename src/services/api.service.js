@@ -232,6 +232,38 @@ const getStudentById = (mssv) => {
   const URL_BACKEND = `/v1/api/student/${mssv}`;
   return axios.get(URL_BACKEND);
 };
+
+// ------------------------------------------------ API phòng học ------------------------------------------------
+const createRoom = (tenPhong, sucChua, coSo) => {
+  const URL_BACKEND = `/v1/api/createroom`;
+  const data = {
+    tenPhong: tenPhong,
+    sucChua: sucChua,
+    coSo: coSo,
+  };
+  return axios.post(URL_BACKEND, data);
+};
+
+const fetchAllRooms = (current, pageSize) => {
+  const URL_BACKEND = `/v1/api/allrooms?current=${current}&pageSize=${pageSize}`;
+  return axios.get(URL_BACKEND);
+};
+
+const updateRoom = (sop, tenPhong, sucChua, coSo) => {
+  const URL_BACKEND = "/v1/api/updateroom";
+  const data = {
+    sop: sop,
+    tenPhong: tenPhong,
+    sucChua: sucChua,
+    coSo: coSo,
+  };
+  return axios.put(URL_BACKEND, data);
+};
+
+const deleteRoom = (sop) => {
+  const URL_BACKEND = `/v1/api/deleteroom/${sop}`;
+  return axios.delete(URL_BACKEND);
+};
 export {
   fetchAllKhoaVien,
   createKhoaVien,
@@ -259,4 +291,8 @@ export {
   getTimetableByAccount,
   submitAttendanceAPI,
   getStudentById,
+  createRoom,
+  fetchAllRooms,
+  updateRoom,
+  deleteRoom,
 };

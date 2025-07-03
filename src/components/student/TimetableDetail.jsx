@@ -272,13 +272,68 @@ const TimetableDetail = ({
 
   // Dừng camera
   const stopCamera = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
+    console.log("🛑 Stopping camera and cleaning up...");
 
-    setIsCameraOpen(false);
-    setStatusText("Chưa khởi động");
+    try {
+      // 1. Dừng interval nhận diện khuôn mặt
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+        console.log("✅ Face recognition interval cleared");
+      }
+
+      // 2. Dừng và cleanup video stream
+      if (webcamRef.current?.video) {
+        const video = webcamRef.current.video;
+
+        // Dừng tất cả media tracks
+        if (video.srcObject) {
+          const stream = video.srcObject;
+          const tracks = stream.getTracks();
+
+          tracks.forEach((track) => {
+            track.stop();
+            console.log(`✅ Stopped ${track.kind} track:`, track.label);
+          });
+
+          // Clear srcObject
+          video.srcObject = null;
+          console.log("✅ Video srcObject cleared");
+        }
+
+        // Reset video element
+        video.load(); // Force video element to reset
+      }
+
+      // 3. Reset tất cả states về trạng thái ban đầu
+      setIsCameraOpen(false);
+      setStatusText("Chưa khởi động");
+      setAttendanceLoading(false);
+
+      // 4. Cleanup các refs nếu có
+      if (typeof lastDetectionRef !== "undefined" && lastDetectionRef.current) {
+        lastDetectionRef.current = null;
+      }
+
+      // 5. Force garbage collection (nếu available)
+      if (window.gc) {
+        window.gc();
+      }
+
+      console.log("✅ Camera stopped and cleanup completed");
+    } catch (error) {
+      console.error("❌ Error during camera cleanup:", error);
+
+      // Fallback cleanup - force reset states ngay cả khi có lỗi
+      setIsCameraOpen(false);
+      setStatusText("Lỗi khi dừng camera");
+      setAttendanceLoading(false);
+
+      notification.warning({
+        message: "Cảnh báo",
+        description: "Có lỗi khi dừng camera, nhưng đã được xử lý.",
+      });
+    }
   };
 
   // Kiểm tra xem có thể điểm danh không

@@ -18,7 +18,12 @@ const LoginPage = () => {
     if (res.data) {
       message.success("Đăng nhập thành công");
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("mssv", res.data.user.sinhVien.mssv);
+      //chỉ lưu mssv khi đăng nhập user là sinh viên
+      if (res.data.user.sinhVien?.mssv) {
+        localStorage.setItem("mssv", res.data.user.sinhVien.mssv);
+      } else {
+        localStorage.removeItem("mssv");
+      }
       setUser(res.data.user);
       navigate("/");
     } else {

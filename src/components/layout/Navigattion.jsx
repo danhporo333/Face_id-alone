@@ -10,7 +10,7 @@ import {
   AliwangwangOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  CalendarOutlined,
+  BankOutlined,
 } from "@ant-design/icons";
 import { Button, Menu } from "antd";
 import "./Navigattion.css";
@@ -25,6 +25,7 @@ const pathToKey = (pathname) => {
   if (pathname.startsWith("/subject")) return "subject";
   if (pathname.startsWith("/teacher")) return "teacher";
   if (pathname.startsWith("/timetable")) return "timetable";
+  if (pathname.startsWith("/room")) return "room";
   return "";
 };
 
@@ -84,10 +85,15 @@ const Navigation = ({ collapsed, setCollapsed }) => {
             icon: <TeamOutlined />,
             label: <Link to={"/teacher"}>Quản lý giảng viên</Link>,
           },
+          // {
+          //   key: "timetable",
+          //   icon: <CalendarOutlined />,
+          //   label: <Link to={"/timetable"}>thời khóa biểu</Link>,
+          // },
           {
-            key: "timetable",
-            icon: <CalendarOutlined />,
-            label: <Link to={"/timetable"}>thời khóa biểu</Link>,
+            key: "room",
+            icon: <BankOutlined />,
+            label: <Link to={"/room"}>Quản lý phòng học</Link>,
           },
           {
             label: `welcome ${user.username}`,

@@ -13,6 +13,7 @@ import { AuthWarner } from "./components/context/auth.context.jsx";
 import AdminRoute from "./components/routes/AdminRoute.jsx";
 import StudentRoute from "./components/routes/StudentRoute.jsx";
 import TimetableStudentPage from "./pages/students/timetable.student.jsx";
+import RoomPage from "./pages/admin/room.jsx";
 
 // Thêm các component tạm thời nếu chưa có
 const ErrorPage = () => <div>404 Not Found</div>;
@@ -65,6 +66,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <TeacherPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/room",
+        element: (
+          <AdminRoute>
+            <RoomPage />
           </AdminRoute>
         ),
       },
