@@ -211,7 +211,7 @@ const getAccountAPI = () => {
   return axios.get(URL_BACKEND);
 };
 
-// ------------------------------------------------ lấy tkb theo tài khoản ------------------------------------------------
+// ------------------------------------------------ lấy tkb theo tài khoản sinh viên ------------------------------------------------
 const getTimetableByAccount = () => {
   const URL_BACKEND = `/v1/api/lich-hoc-ca-nhan`;
   return axios.get(URL_BACKEND);
@@ -264,6 +264,13 @@ const deleteRoom = (sop) => {
   const URL_BACKEND = `/v1/api/deleteroom/${sop}`;
   return axios.delete(URL_BACKEND);
 };
+
+// ------------------------------------------------ API Lấy lịch dạy học của giảng viên ------------------------------------------------
+const getTimetableByTeacher = () => {
+  const URL_BACKEND = `/v1/api/lich-day-ca-nhan`;
+  return axios.get(URL_BACKEND);
+};
+
 export {
   fetchAllKhoaVien,
   createKhoaVien,
@@ -295,4 +302,5 @@ export {
   fetchAllRooms,
   updateRoom,
   deleteRoom,
+  getTimetableByTeacher,
 };
