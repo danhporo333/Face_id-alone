@@ -12,7 +12,9 @@ import LoginPage from "./pages/login.jsx";
 import { AuthWarner } from "./components/context/auth.context.jsx";
 import AdminRoute from "./components/routes/AdminRoute.jsx";
 import StudentRoute from "./components/routes/StudentRoute.jsx";
+import TeacherRoute from "./components/routes/TeacherRoute.jsx";
 import TimetableStudentPage from "./pages/students/timetable.student.jsx";
+import TimetableTeacherPage from "./pages/teacher/lichday.teacher.jsx";
 import RoomPage from "./pages/admin/room.jsx";
 
 // Thêm các component tạm thời nếu chưa có
@@ -83,6 +85,14 @@ const router = createBrowserRouter([
           <StudentRoute>
             <TimetableStudentPage />
           </StudentRoute>
+        ),
+      },
+      {
+        path: "/lichday",
+        element: (
+          <TeacherRoute>
+            <TimetableTeacherPage />
+          </TeacherRoute>
         ),
       },
     ],

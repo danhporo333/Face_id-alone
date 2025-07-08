@@ -26,6 +26,7 @@ const pathToKey = (pathname) => {
   if (pathname.startsWith("/teacher")) return "teacher";
   if (pathname.startsWith("/timetable")) return "timetable";
   if (pathname.startsWith("/room")) return "room";
+  if (pathname.startsWith("/Lichday")) return "lichday";
   return "";
 };
 
@@ -118,6 +119,27 @@ const Navigation = ({ collapsed, setCollapsed }) => {
           },
           {
             label: `${user.holot} ${user.ten}`,
+            icon: <AliwangwangOutlined />,
+            children: [
+              {
+                label: "Đăng xuất",
+                key: "logout",
+                icon: <LoginOutlined />,
+                onClick: handleLogout,
+              },
+            ],
+          },
+        ]
+      : []),
+    ...(isTeacher
+      ? [
+          {
+            key: "lichday",
+            icon: <ApartmentOutlined />,
+            label: <Link to={"/Lichday"}>Lịch giảng dạy</Link>,
+          },
+          {
+            label: `${user.hoGV} ${user.tenGV}`,
             icon: <AliwangwangOutlined />,
             children: [
               {
