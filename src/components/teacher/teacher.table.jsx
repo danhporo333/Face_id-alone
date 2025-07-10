@@ -9,6 +9,7 @@ import {
 } from "@ant-design/icons";
 import { getTimetableByTeacher } from "../../services/api.service";
 import "../../style/teacher/lichday.css";
+import TeacherTimetableDetail from "./teacherDetail"; // Uncomment khi cần dùng
 
 const Lichday = () => {
   const [currentWeek, setCurrentWeek] = useState(0);
@@ -159,11 +160,11 @@ const Lichday = () => {
         )}
       </div>
       {/* Uncomment khi cần dùng TimetableDetail cho giảng viên */}
-      {/* <TimetableDetail
+      <TeacherTimetableDetail
         isDetailOpen={isDetailOpen}
         setIsDetailOpen={setIsDetailOpen}
         selectedTimetable={selectedTimetable}
-      /> */}
+      />
     </div>
   );
 };
