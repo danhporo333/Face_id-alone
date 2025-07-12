@@ -122,14 +122,6 @@ const ClassTable = (props) => {
           pageSize: pageSize,
           showSizeChanger: false,
           total: total,
-          // showTotal: (total, range) => {
-          //   return (
-          //     <div>
-          //       {" "}
-          //       {range[0]}-{range[1]} trên {total} rows
-          //     </div>
-          //   );
-          // },
         }}
         onChange={onChange}
       />

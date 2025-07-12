@@ -1,12 +1,41 @@
 import { Table, Button, Popconfirm, notification, Image } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import UpdateTkb from "./updateTkb";
+import { deleteTkb } from "../../../services/api.service.js";
+
 const TKBtable = (props) => {
-  const {loadDataTkb, dataTkb, current, pageSize, total, setCurrent, setPageSize} = props;
+  const {
+    loadDataTkb,
+    dataTkb,
+    current,
+    pageSize,
+    total,
+    setCurrent,
+    setPageSize,
+  } = props;
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedTkb, setSelectedTkb] = useState(null);
 
-    const columns = [
+  const handleDelete = async (id) => {
+    try {
+      const resDelete = await deleteTkb(id);
+      if (resDelete.data) {
+        notification.success({
+          message: "Thành công",
+          description: "Xóa thời khóa biểu thành công",
+        });
+      }
+      await loadDataTkb();
+    } catch (error) {
+      notification.error({
+        message: "Có lỗi xảy ra",
+        description: error.message,
+      });
+    }
+  };
+
+  const columns = [
     {
       title: "STT",
       align: "center",
@@ -32,20 +61,21 @@ const TKBtable = (props) => {
       dataIndex: "cahoc",
       key: "cahoc",
       align: "center",
-      render: (_, record) => `${record.tietBD}-${record.tietKT}`
+      render: (_, record) => `${record.tietBD}-${record.tietKT}`,
     },
     {
       title: "Môn học",
       dataIndex: "monhoc",
       key: "monhoc",
-      render: (_, record) => record.monHoc?.tenmh
+      render: (_, record) => record.monHoc?.tenmh,
     },
     {
       title: "Giảng viên",
       dataIndex: "giangVien",
       key: "giangVien",
       align: "center",
-      render: (_, record) => `${record.giangVien?.hoGV} ${record.giangVien?.tenGV}`
+      render: (_, record) =>
+        `${record.giangVien?.hoGV} ${record.giangVien?.tenGV}`,
     },
     {
       title: "Trạng thái điểm danh",
@@ -53,13 +83,15 @@ const TKBtable = (props) => {
       key: "diemdanh",
       align: "center",
       render: (_, record) => (
-        <span style={{ 
-          color: record.isOpenAttendance ? "#52c41a" : "#ff4d4f",
-          fontWeight: "bold"
-        }}>
+        <span
+          style={{
+            color: record.isOpenAttendance ? "#52c41a" : "#ff4d4f",
+            fontWeight: "bold",
+          }}
+        >
           {record.isOpenAttendance ? "Đang mở" : "Đã đóng"}
         </span>
-      )
+      ),
     },
     {
       title: "Thống kê điểm danh",
@@ -67,44 +99,81 @@ const TKBtable = (props) => {
       align: "center",
       render: (_, record) => {
         if (!record.diemDanh || record.diemDanh.length === 0) {
-          return <span style={{ color: "#999" }}>Chưa có dữ liệu</span>;
+          return <span style={{ color: "#999" }}>Chưa điểm danh</span>;
         }
-        
-        const coMat = record.diemDanh.filter(dd => dd.coMat && !dd.diTre).length;
-        const diTre = record.diemDanh.filter(dd => dd.coMat && dd.diTre).length;
-        const vang = record.diemDanh.filter(dd => !dd.coMat).length;
+
+        const coMat = record.diemDanh.filter(
+          (dd) => dd.coMat && !dd.diTre
+        ).length;
+        const diTre = record.diemDanh.filter(
+          (dd) => dd.coMat && dd.diTre
+        ).length;
+        const vang = record.diemDanh.filter((dd) => !dd.coMat).length;
         const total = record.diemDanh.length;
-        
+
         const statuses = [];
-        
+
         if (coMat > 0) {
           statuses.push(
-            <div key="comat" style={{ color: "#52c41a", fontWeight: "bold", fontSize: "17px"}}>
+            <div
+              key="comat"
+              style={{ color: "#52c41a", fontWeight: "bold", fontSize: "17px" }}
+            >
               Có mặt
             </div>
           );
         }
-        
+
         if (diTre > 0) {
+          // Lấy danh sách sinh viên đi trễ và lý do
+          const diTreList = record.diemDanh.filter(
+            (dd) => dd.coMat && dd.diTre
+          );
+          const lyDoList = diTreList
+            .filter((dd) => dd.lyDoKhac) // Chỉ lấy những sinh viên có lý do
+            .map((dd) => dd.lyDoKhac);
+
           statuses.push(
-            <div key="ditre" style={{ color: "#fa8c16", fontWeight: "bold", fontSize: "17px"}}>
-              Đi trễ
+            <div
+              key="ditre"
+              style={{ color: "#fa8c16", fontWeight: "bold", fontSize: "17px" }}
+            >
+              <div>Đi trễ</div>
+              {lyDoList.length > 0 && (
+                <div
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: "normal",
+                    marginTop: "4px",
+                    fontStyle: "italic",
+                  }}
+                >
+                  Lý do: {lyDoList.join(", ")}
+                </div>
+              )}
             </div>
           );
         }
         if (vang > 0) {
           statuses.push(
-            <div key="vang" style={{ color: "#ff4d4f", fontWeight: "bold", fontSize: "17px"}}>
+            <div
+              key="vang"
+              style={{ color: "#ff4d4f", fontWeight: "bold", fontSize: "17px" }}
+            >
               Vắng
             </div>
           );
         }
         return (
           <div style={{ fontSize: "12px", lineHeight: "1.4" }}>
-            {statuses.length > 0 ? statuses : <span style={{ color: "#999" }}>Chưa có dữ liệu</span>}
+            {statuses.length > 0 ? (
+              statuses
+            ) : (
+              <span style={{ color: "#999" }}>Chưa có dữ liệu</span>
+            )}
           </div>
         );
-      }
+      },
     },
     {
       title: "Thao tác",
@@ -162,14 +231,14 @@ const TKBtable = (props) => {
         }}
         onChange={onChange}
       />
-      {/* <UpdateKhoaVien
+      <UpdateTkb
         isUpdateModalOpen={isUpdateModalOpen}
         setIsUpdateModalOpen={setIsUpdateModalOpen}
-        selectedkhoaVien={selectedkhoaVien}
-        loadDataKhoaVien={loadDataKhoaVien}
-      /> */}
+        selectedTkb={selectedTkb}
+        loadDataTkb={loadDataTkb}
+      />
     </>
   );
-}
+};
 
 export default TKBtable;

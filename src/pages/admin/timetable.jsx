@@ -6,7 +6,7 @@ import "../../style/admin/timetable.css";
 
 const TimetableAdminPage = () => {
     const [current, setCurrent] = useState(1);
-    const [pageSize, setPageSize] = useState(3);
+    const [pageSize, setPageSize] = useState(4);
     const [dataTkb, setDataTkb] = useState([]);
     const [total, setTotal] = useState(0);
 

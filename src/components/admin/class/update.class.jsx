@@ -75,6 +75,7 @@ const UpdateClass = ({
       });
     }
   };
+  
   const resetForm = () => {
     setNameClass("");
     setSiso("");
