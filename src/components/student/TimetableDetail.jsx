@@ -338,23 +338,8 @@ const TimetableDetail = ({
 
   // Kiểm tra xem có thể điểm danh không
   const canAttendance = () => {
-    // const today = new Date().toLocaleDateString("vi-VN");
-    // const isToday = selectedTimetable?.date === today;
-
-    // // Nếu attendance là null/undefined hoặc chưa có điểm danh thành công
-    // const attendance = selectedTimetable?.attendance;
-    // const hasNotAttendedSuccessfully = !attendance || !attendance.coMat;
-
-    // console.log("=== DEBUG ATTENDANCE ===");
-    // console.log("Today:", today);
-    // console.log("Selected date:", selectedTimetable?.date);
-    // console.log("Is today:", isToday);
-    // console.log("Attendance data:", attendance);
-    // console.log("Has not attended successfully:", hasNotAttendedSuccessfully);
-    // console.log("Can attendance:", isToday && hasNotAttendedSuccessfully);
-
-    // return isToday && hasNotAttendedSuccessfully;
-    return true;
+    const isOpen = selectedTimetable.isOpenAttendance;
+    return isOpen;
   };
 
   if (!selectedTimetable) return null;
@@ -626,6 +611,19 @@ const TimetableDetail = ({
             </div>
           )}
         </div>
+        {/* mới: chỉ hiển thị khi giảng viên đã mở điểm danh */}
+        {/* {canAttendance() && (
+        <div style={{ textAlign: "center", marginTop: 16 }}>
+          <Button
+            type="primary"
+            size="large"
+            onClick={submitAttendance}
+            loading={attendanceLoading}
+          >
+            Điểm danh
+          </Button>
+        </div>
+      )} */}
       </Drawer>
 
       {/* Face ID Camera Modal */}

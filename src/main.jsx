@@ -16,6 +16,7 @@ import TeacherRoute from "./components/routes/TeacherRoute.jsx";
 import TimetableStudentPage from "./pages/students/timetable.student.jsx";
 import TimetableTeacherPage from "./pages/teacher/lichday.teacher.jsx";
 import RoomPage from "./pages/admin/room.jsx";
+import TimetableDetailPage from "./pages/teacher/timetable-detail.jsx";
 
 // Thêm các component tạm thời nếu chưa có
 const ErrorPage = () => <div>404 Not Found</div>;
@@ -92,6 +93,14 @@ const router = createBrowserRouter([
         element: (
           <TeacherRoute>
             <TimetableTeacherPage />
+          </TeacherRoute>
+        ),
+      },
+      {
+        path: "/teacher/timetable-detail/:id",
+        element: (
+          <TeacherRoute>
+            <TimetableDetailPage />
           </TeacherRoute>
         ),
       },

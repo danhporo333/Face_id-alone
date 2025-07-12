@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Tag, Row, Col, Button, Spin, notification } from "antd";
+import { useLocation } from "react-router-dom";
 import {
   CalendarOutlined,
   ClockCircleOutlined,
@@ -11,6 +12,7 @@ import "../../style/student/timetable.css";
 import TimetableDetail from "./TimetableDetail.jsx"; // Import the detail component
 
 const TimetableTable = () => {
+  const location = useLocation(); 
   const [currentWeek, setCurrentWeek] = useState(0);
   const [allData, setAllData] = useState([]); // raw tkbs
   const [weekData, setWeekData] = useState([]); // filtered
@@ -49,6 +51,7 @@ const TimetableTable = () => {
         room: x.phong.tenPhong,
         teacher: `${x.giangVien.hoGV} ${x.giangVien.tenGV}`,
         attendance: x.diemDanh?.[0],
+        isOpenAttendance: x.isOpenAttendance  
       }));
       setAllData(arr);
     } catch (e) {

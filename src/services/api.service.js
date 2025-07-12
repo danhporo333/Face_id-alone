@@ -271,6 +271,29 @@ const getTimetableByTeacher = () => {
   return axios.get(URL_BACKEND);
 };
 
+// API cập nhật điểm danh bởi giảng viên
+const updateAttendanceByTeacher = (mssv, tkbId, attendanceData) => {
+  return axios.put(`${import.meta.env.VITE_BACKEND_URL}/v1/api/teacher/update-attendance`, {
+    mssv,
+    tkbId,
+    ...attendanceData
+  });
+};
+
+export const openAttendanceByTeacher = (tkbId) => {
+  return axios.post(
+    `${import.meta.env.VITE_BACKEND_URL}/v1/api/teacher/open-attendance`,
+    { tkbId }
+  );
+}
+
+export const closeAttendanceByTeacher = (tkbId) => {
+  return axios.post(
+    `${import.meta.env.VITE_BACKEND_URL}/v1/api/teacher/close-attendance`,
+    { tkbId }
+  );
+}
+
 export {
   fetchAllKhoaVien,
   createKhoaVien,
@@ -303,4 +326,5 @@ export {
   updateRoom,
   deleteRoom,
   getTimetableByTeacher,
+  updateAttendanceByTeacher,
 };

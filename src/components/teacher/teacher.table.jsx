@@ -8,20 +8,24 @@ import {
   TeamOutlined,
 } from "@ant-design/icons";
 import { getTimetableByTeacher } from "../../services/api.service";
+
+import { useNavigate } from "react-router-dom";
 import "../../style/teacher/lichday.css";
-import TeacherTimetableDetail from "./teacherDetail"; // Uncomment khi cần dùng
 
 const Lichday = () => {
   const [currentWeek, setCurrentWeek] = useState(0);
   const [allData, setAllData] = useState([]); // raw tkbs
   const [weekData, setWeekData] = useState([]); // filtered
   const [loading, setLoading] = useState(true);
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
-  const [selectedTimetable, setSelectedTimetable] = useState(null);
+  const navigate = useNavigate(); 
+  // const [isDetailOpen, setIsDetailOpen] = useState(false);
+  // const [selectedTimetable, setSelectedTimetable] = useState(null);
 
   const handleCardClick = (item) => {
-    setSelectedTimetable(item);
-    setIsDetailOpen(true);
+    // Chuyển hướng sang trang chi tiết với tham số id
+    navigate(`/teacher/timetable-detail/${item.id}`, {
+      state: { timetableData: item }
+    });
   };
 
   useEffect(() => {
@@ -160,11 +164,11 @@ const Lichday = () => {
         )}
       </div>
       {/* Uncomment khi cần dùng TimetableDetail cho giảng viên */}
-      <TeacherTimetableDetail
+      {/* <TeacherTimetableDetail
         isDetailOpen={isDetailOpen}
         setIsDetailOpen={setIsDetailOpen}
         selectedTimetable={selectedTimetable}
-      />
+      /> */}
     </div>
   );
 };

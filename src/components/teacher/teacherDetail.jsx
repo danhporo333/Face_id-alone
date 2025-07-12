@@ -8,11 +8,7 @@ import {
 } from "@ant-design/icons";
 import { getTimetableByTeacher } from "../../services/api.service";
 
-const TeacherTimetableDetail = ({
-  isDetailOpen,
-  setIsDetailOpen,
-  selectedTimetable,
-}) => {
+const TeacherTimetableDetail = () => {
   const [studentList, setStudentList] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -71,11 +67,11 @@ const TeacherTimetableDetail = ({
       dataIndex: "faceID",
       key: "avatar",
       width: 80,
-      render: (f) =>
-        f ? (
+      render: (faceID) =>
+        faceID ? (
           <Avatar
             src={`${import.meta.env.VITE_BACKEND_URL}/image/student/${
-              f.faceID
+              faceID
             }`}
           />
         ) : (
