@@ -18,7 +18,6 @@ const ClassForm = (props) => {
   const loadKhoaVien = async () => {
     try {
       const resKhoaVien = await fetchAllKhoaVien(1, 1000);
-      //   console.log("Khoa Vien List:", resKhoaVien.data.result);
       setKhoaVienList(resKhoaVien.data.result);
     } catch (error) {
       notification.error({

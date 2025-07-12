@@ -1,0 +1,175 @@
+import { Table, Button, Popconfirm, notification, Image } from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { useState } from "react";
+const TKBtable = (props) => {
+  const {loadDataTkb, dataTkb, current, pageSize, total, setCurrent, setPageSize} = props;
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [selectedTkb, setSelectedTkb] = useState(null);
+
+    const columns = [
+    {
+      title: "STT",
+      align: "center",
+      render: (_, record, index) => {
+        // return <>{index + 1}</>;
+        return <>{index + 1 + (current - 1) * pageSize}</>;
+      },
+    },
+    {
+      title: "Ngày",
+      dataIndex: "ngay",
+      key: "ngay",
+      align: "center",
+    },
+    {
+      title: "Thứ",
+      dataIndex: "thu",
+      key: "thu",
+      align: "center",
+    },
+    {
+      title: "Ca học (tiết BD - KT)",
+      dataIndex: "cahoc",
+      key: "cahoc",
+      align: "center",
+      render: (_, record) => `${record.tietBD}-${record.tietKT}`
+    },
+    {
+      title: "Môn học",
+      dataIndex: "monhoc",
+      key: "monhoc",
+      render: (_, record) => record.monHoc?.tenmh
+    },
+    {
+      title: "Giảng viên",
+      dataIndex: "giangVien",
+      key: "giangVien",
+      align: "center",
+      render: (_, record) => `${record.giangVien?.hoGV} ${record.giangVien?.tenGV}`
+    },
+    {
+      title: "Trạng thái điểm danh",
+      dataIndex: "diemdanh",
+      key: "diemdanh",
+      align: "center",
+      render: (_, record) => (
+        <span style={{ 
+          color: record.isOpenAttendance ? "#52c41a" : "#ff4d4f",
+          fontWeight: "bold"
+        }}>
+          {record.isOpenAttendance ? "Đang mở" : "Đã đóng"}
+        </span>
+      )
+    },
+    {
+      title: "Thống kê điểm danh",
+      key: "thongke",
+      align: "center",
+      render: (_, record) => {
+        if (!record.diemDanh || record.diemDanh.length === 0) {
+          return <span style={{ color: "#999" }}>Chưa có dữ liệu</span>;
+        }
+        
+        const coMat = record.diemDanh.filter(dd => dd.coMat && !dd.diTre).length;
+        const diTre = record.diemDanh.filter(dd => dd.coMat && dd.diTre).length;
+        const vang = record.diemDanh.filter(dd => !dd.coMat).length;
+        const total = record.diemDanh.length;
+        
+        const statuses = [];
+        
+        if (coMat > 0) {
+          statuses.push(
+            <div key="comat" style={{ color: "#52c41a", fontWeight: "bold", fontSize: "17px"}}>
+              Có mặt
+            </div>
+          );
+        }
+        
+        if (diTre > 0) {
+          statuses.push(
+            <div key="ditre" style={{ color: "#fa8c16", fontWeight: "bold", fontSize: "17px"}}>
+              Đi trễ
+            </div>
+          );
+        }
+        if (vang > 0) {
+          statuses.push(
+            <div key="vang" style={{ color: "#ff4d4f", fontWeight: "bold", fontSize: "17px"}}>
+              Vắng
+            </div>
+          );
+        }
+        return (
+          <div style={{ fontSize: "12px", lineHeight: "1.4" }}>
+            {statuses.length > 0 ? statuses : <span style={{ color: "#999" }}>Chưa có dữ liệu</span>}
+          </div>
+        );
+      }
+    },
+    {
+      title: "Thao tác",
+      key: "action",
+      render: (_, record) => (
+        <div style={{ display: "flex", gap: 10 }}>
+          <Button
+            type="primary"
+            icon={<EditOutlined />}
+            onClick={() => {
+              setSelectedTkb(record);
+              setIsUpdateModalOpen(true);
+            }}
+          />
+          <Popconfirm
+            title="Xóa khoa viện"
+            description="Bạn có chắc chắn muốn xóa khoa viện này?"
+            onConfirm={() => handleDelete(record.id)}
+            okText="Có"
+            cancelText="Không"
+          >
+            <Button danger icon={<DeleteOutlined />} />
+          </Popconfirm>
+        </div>
+      ),
+    },
+  ];
+
+  const onChange = (pagination, filters, sorter, extra) => {
+    if (pagination && pagination.current) {
+      if (pagination.current !== current) {
+        setCurrent(+pagination.current);
+      }
+    }
+
+    if (pagination && pagination.pageSize) {
+      if (pagination.pageSize !== pageSize) {
+        setPageSize(pagination.pageSize);
+      }
+    }
+  };
+
+  return (
+    <>
+      <Table
+        columns={columns}
+        dataSource={dataTkb}
+        rowKey="id"
+        pagination={{
+          position: ["bottomCenter"],
+          current: current,
+          pageSize: pageSize,
+          showSizeChanger: false,
+          total: total,
+        }}
+        onChange={onChange}
+      />
+      {/* <UpdateKhoaVien
+        isUpdateModalOpen={isUpdateModalOpen}
+        setIsUpdateModalOpen={setIsUpdateModalOpen}
+        selectedkhoaVien={selectedkhoaVien}
+        loadDataKhoaVien={loadDataKhoaVien}
+      /> */}
+    </>
+  );
+}
+
+export default TKBtable;

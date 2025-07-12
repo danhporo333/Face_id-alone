@@ -47,7 +47,6 @@ const KhoavienTable = (props) => {
         setPageSize(pagination.pageSize);
       }
     }
-    console.log("onChange", { pagination, filters, sorter, extra });
   };
 
   const columns = [

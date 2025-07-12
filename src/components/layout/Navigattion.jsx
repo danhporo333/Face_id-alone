@@ -19,6 +19,7 @@ import { AuthContext } from "../context/auth.context.jsx";
 
 const pathToKey = (pathname) => {
   if (pathname === "/") return "home";
+  if (pathname.startsWith("/timetableAdminPage")) return "timetableAdminPage";
   if (pathname.startsWith("/khoavien")) return "khoavien";
   if (pathname.startsWith("/class")) return "class";
   if (pathname.startsWith("/student")) return "student";
@@ -85,16 +86,16 @@ const Navigation = ({ collapsed, setCollapsed }) => {
             key: "teacher",
             icon: <TeamOutlined />,
             label: <Link to={"/teacher"}>Quản lý giảng viên</Link>,
-          },
-          // {
-          //   key: "timetable",
-          //   icon: <CalendarOutlined />,
-          //   label: <Link to={"/timetable"}>thời khóa biểu</Link>,
-          // },
+          },          
           {
             key: "room",
             icon: <BankOutlined />,
             label: <Link to={"/room"}>Quản lý phòng học</Link>,
+          },
+          {
+            key: "timetableAdminPage",
+            icon: <BankOutlined />,
+            label: <Link to={"/timetableAdminPage"}>Quản lý thời khóa biểu</Link>,
           },
           {
             label: `welcome ${user.username}`,

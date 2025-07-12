@@ -294,6 +294,46 @@ export const closeAttendanceByTeacher = (tkbId) => {
   );
 }
 
+// ======================================= API thời khoá biểu =====================================
+export const createTkb = (thu, ngay, tietBD, tietKT, mamh, mgv, sop) => {
+  const URL_BACKEND = `/v1/api/createtkb`;
+  const data = {
+    thu: thu,
+    ngay: ngay,
+    tietBD: tietBD,
+    tietKT: tietKT,
+    mamh: mamh,
+    mgv: mgv,
+    sop: sop
+  };
+  return axios.post(URL_BACKEND, data);
+}
+
+export const fetchAllTkb = (current, pageSize) => {
+  const URL_BACKEND = `/v1/api/alltkb?current=${current}&pageSize=${pageSize}`;
+  return axios.get(URL_BACKEND);
+}
+
+export const updateTkb = (id, thu, ngay, tietBD, tietKT, mamh, mgv, sop) => {
+  const URL_BACKEND = `/v1/api/updatetkb`;
+  const data = {
+    id: id,
+    thu: thu,
+    ngay: ngay,
+    tietBD: tietBD,
+    tietKT: tietKT,
+    mamh: mamh,
+    mgv: mgv,
+    sop: sop
+  };
+  return axios.put(URL_BACKEND, data);
+}
+
+export const deleteTkb = (id) => {
+  const URL_BACKEND = `/v1/api/deletetkb/${id}`;
+  return axios.delete(URL_BACKEND);
+}
+
 export {
   fetchAllKhoaVien,
   createKhoaVien,

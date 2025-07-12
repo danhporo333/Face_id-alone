@@ -16,12 +16,12 @@ export default defineConfig({
   server: {
     proxy: {
       "/v1/api": {
-        target: "http://localhost:8000",
+        target: "http://faceid.io.vn",
         changeOrigin: true,
         secure: true,
       },
       "/image": {
-        target: "http://localhost:8000",
+        target: "http://faceid.io.vn",
         changeOrigin: true,
         secure: true,
       },
