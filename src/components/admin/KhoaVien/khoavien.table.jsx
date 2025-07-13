@@ -1,8 +1,13 @@
 import { Table, Button, Popconfirm, notification, Image } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
 import UpdateKhoaVien from "./update.khoavien";
 import { deleteKhoaVien } from "../../../services/api.service.js";
 import { useState } from "react";
+import ImportModal from "./ImportModal";
 
 const KhoavienTable = (props) => {
   const {
@@ -16,6 +21,7 @@ const KhoavienTable = (props) => {
   } = props;
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedkhoaVien, setSelectedkhoaVien] = useState(null);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
 
   const handleDelete = async (makv) => {
     try {
@@ -114,6 +120,15 @@ const KhoavienTable = (props) => {
 
   return (
     <>
+      <div style={{ marginBottom: 16 }}>
+        <Button
+          icon={<UploadOutlined />}
+          type="primary"
+          onClick={() => setIsImportModalOpen(true)}
+        >
+          Import Excel
+        </Button>
+      </div>
       <Table
         columns={columns}
         dataSource={dataKhoaVien}
@@ -124,14 +139,6 @@ const KhoavienTable = (props) => {
           pageSize: pageSize,
           showSizeChanger: false,
           total: total,
-          // showTotal: (total, range) => {
-          //   return (
-          //     <div>
-          //       {" "}
-          //       {range[0]}-{range[1]} trên {total} rows
-          //     </div>
-          //   );
-          // },
         }}
         onChange={onChange}
       />
@@ -140,6 +147,11 @@ const KhoavienTable = (props) => {
         setIsUpdateModalOpen={setIsUpdateModalOpen}
         selectedkhoaVien={selectedkhoaVien}
         loadDataKhoaVien={loadDataKhoaVien}
+      />
+      <ImportModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        onSuccess={loadDataKhoaVien}
       />
     </>
   );

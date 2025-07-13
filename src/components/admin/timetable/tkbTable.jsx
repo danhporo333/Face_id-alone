@@ -1,8 +1,16 @@
-import { Table, Button, Popconfirm, notification, Image } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { Table, Button, Popconfirm, notification, Image, Modal } from "antd";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
+import { useState, useEffect } from "react";
 import UpdateTkb from "./updateTkb";
-import { deleteTkb } from "../../../services/api.service.js";
+import {
+  deleteTkb,
+  assignStudentToTkb,
+  fetchAllStudent,
+} from "../../../services/api.service.js";
 
 const TKBtable = (props) => {
   const {
@@ -16,6 +24,41 @@ const TKBtable = (props) => {
   } = props;
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedTkb, setSelectedTkb] = useState(null);
+  const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
+  const [studentList, setStudentList] = useState([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
+  // Load SV khi modal mở
+  useEffect(() => {
+    if (!isAssignModalOpen) return;
+    (async () => {
+      try {
+        const res = await fetchAllStudent(1, 1000);
+        console.log("res.data.students", res);
+        setStudentList(res.data.students);
+      } catch (err) {
+        notification.error({
+          message: "Lỗi",
+          description: "Không tải được sinh viên",
+        });
+      }
+    })();
+  }, [isAssignModalOpen]);
+
+  const handleAssign = async () => {
+    try {
+      await Promise.all(
+        selectedRowKeys.map((mssv) =>
+          assignStudentToTkb({ mssv, tkbId: selectedTkb.id })
+        )
+      );
+      notification.success({ message: "Gán thành công" });
+      setIsAssignModalOpen(false);
+      loadDataTkb();
+    } catch (err) {
+      notification.error({ message: "Lỗi", description: err.message });
+    }
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -176,6 +219,23 @@ const TKBtable = (props) => {
       },
     },
     {
+      key: "assign",
+      title: "Gán SV",
+      align: "center",
+      render: (_, record) => (
+        <Button
+          icon={<UserAddOutlined />}
+          onClick={() => {
+            setSelectedTkb(record);
+            setSelectedRowKeys([]);
+            setIsAssignModalOpen(true);
+          }}
+        >
+          Gán SV
+        </Button>
+      ),
+    },
+    {
       title: "Thao tác",
       key: "action",
       render: (_, record) => (
@@ -231,6 +291,31 @@ const TKBtable = (props) => {
         }}
         onChange={onChange}
       />
+      <Modal
+        title={`Gán SV cho buổi ${selectedTkb?.thu}`}
+        open={isAssignModalOpen}
+        onOk={handleAssign}
+        onCancel={() => setIsAssignModalOpen(false)}
+        okText="Xác nhận"
+        width={800}
+      >
+        <Table
+          rowSelection={{ selectedRowKeys, onChange: setSelectedRowKeys }}
+          dataSource={studentList}
+          columns={[
+            { title: "MSSV", dataIndex: "mssv", key: "mssv" },
+            {
+              title: "Họ tên",
+              key: "ten",
+              render: (_, record) => `${record.holot} ${record.ten}`,
+            },
+          ]}
+          rowKey="mssv"
+          pagination={false}
+          scroll={{ y: 400 }} // Thêm scroll dọc
+          size="small" // Làm table nhỏ gọn hơn
+        />
+      </Modal>
       <UpdateTkb
         isUpdateModalOpen={isUpdateModalOpen}
         setIsUpdateModalOpen={setIsUpdateModalOpen}

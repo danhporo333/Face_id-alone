@@ -31,6 +31,15 @@ const deleteKhoaVien = (makv) => {
   return axios.delete(URL_BACKEND);
 };
 
+export const importKhoaVienFromExcel = (formData) => {
+  const URL_BACKEND = `/v1/api/import-khoa-vien`;
+  return axios.post(URL_BACKEND, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
 // ------------------------------------------------ API CLASS ------------------------------------------------
 
 const createClass = (tenlop, siso, makv) => {
@@ -273,11 +282,14 @@ const getTimetableByTeacher = () => {
 
 // API cập nhật điểm danh bởi giảng viên
 const updateAttendanceByTeacher = (mssv, tkbId, attendanceData) => {
-  return axios.put(`${import.meta.env.VITE_BACKEND_URL}/v1/api/teacher/update-attendance`, {
-    mssv,
-    tkbId,
-    ...attendanceData
-  });
+  return axios.put(
+    `${import.meta.env.VITE_BACKEND_URL}/v1/api/teacher/update-attendance`,
+    {
+      mssv,
+      tkbId,
+      ...attendanceData,
+    }
+  );
 };
 
 export const openAttendanceByTeacher = (tkbId) => {
@@ -285,14 +297,14 @@ export const openAttendanceByTeacher = (tkbId) => {
     `${import.meta.env.VITE_BACKEND_URL}/v1/api/teacher/open-attendance`,
     { tkbId }
   );
-}
+};
 
 export const closeAttendanceByTeacher = (tkbId) => {
   return axios.post(
     `${import.meta.env.VITE_BACKEND_URL}/v1/api/teacher/close-attendance`,
     { tkbId }
   );
-}
+};
 
 // ======================================= API thời khoá biểu =====================================
 export const createTkb = (thu, ngay, tietBD, tietKT, mamh, mgv, sop) => {
@@ -304,15 +316,15 @@ export const createTkb = (thu, ngay, tietBD, tietKT, mamh, mgv, sop) => {
     tietKT: tietKT,
     mamh: mamh,
     mgv: mgv,
-    sop: sop
+    sop: sop,
   };
   return axios.post(URL_BACKEND, data);
-}
+};
 
 export const fetchAllTkb = (current, pageSize) => {
   const URL_BACKEND = `/v1/api/alltkb?current=${current}&pageSize=${pageSize}`;
   return axios.get(URL_BACKEND);
-}
+};
 
 export const updateTkb = (id, thu, ngay, tietBD, tietKT, mamh, mgv, sop) => {
   const URL_BACKEND = `/v1/api/updatetkb`;
@@ -324,15 +336,27 @@ export const updateTkb = (id, thu, ngay, tietBD, tietKT, mamh, mgv, sop) => {
     tietKT: tietKT,
     mamh: mamh,
     mgv: mgv,
-    sop: sop
+    sop: sop,
   };
   return axios.put(URL_BACKEND, data);
-}
+};
 
 export const deleteTkb = (id) => {
   const URL_BACKEND = `/v1/api/deletetkb/${id}`;
   return axios.delete(URL_BACKEND);
-}
+};
+
+// ======================================= API gán sinh viên vào thời khoá biểu =====================================
+const assignStudentToTkb = (tkbId, mssv) => {
+  const URL_BACKEND = `/v1/api/gan-sinh-vien`;
+  const data = {
+    mssv: mssv,
+    tkbId: tkbId,
+  };
+  return axios.post(URL_BACKEND, data);
+};
+
+// ======================================= API lấy lịch học của sinh viên =====================================
 
 export {
   fetchAllKhoaVien,
@@ -367,4 +391,5 @@ export {
   deleteRoom,
   getTimetableByTeacher,
   updateAttendanceByTeacher,
+  assignStudentToTkb,
 };
