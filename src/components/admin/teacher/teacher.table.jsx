@@ -1,8 +1,13 @@
 import { Table, Button, Popconfirm, notification, Image } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
 import { useState } from "react";
 import UpdateTeacher from "./update.teacher";
 import { deleteTeacher } from "../../../services/api.service.js";
+import ImportModal from "./ImportModal";
 
 const TeacherTable = (props) => {
   const {
@@ -16,6 +21,7 @@ const TeacherTable = (props) => {
   } = props;
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
 
   const handleDelete = async (mgv) => {
     try {
@@ -109,6 +115,15 @@ const TeacherTable = (props) => {
 
   return (
     <>
+      <div style={{ marginBottom: 16 }}>
+        <Button
+          icon={<UploadOutlined />}
+          type="primary"
+          onClick={() => setIsImportModalOpen(true)}
+        >
+          Import Excel
+        </Button>
+      </div>
       <Table
         columns={columns}
         dataSource={dataTeachers}
@@ -127,6 +142,11 @@ const TeacherTable = (props) => {
         setIsUpdateModalOpen={setIsUpdateModalOpen}
         selectedTeacher={selectedTeacher}
         loadDataTeachers={loadDataTeachers}
+      />
+      <ImportModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        onSuccess={loadDataTeachers}
       />
     </>
   );
