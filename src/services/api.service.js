@@ -73,6 +73,15 @@ const deleteClass = (malop) => {
   return axios.delete(URL_BACKEND);
 };
 
+export const importClassFromExcel = (formData) => {
+  const URL_BACKEND = `/v1/api/import-classes`;
+  return axios.post(URL_BACKEND, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
 // ------------------------------------------------ API STUDENT ------------------------------------------------
 
 const createStudent = (malop, holot, ten, ntns, phai, emailSV, image) => {
@@ -139,6 +148,15 @@ const handleUploadFile = async (file, folder) => {
   return axios.post(URL_BACKEND, bodyFormData, config);
 };
 
+export const importStudentFromExcel = (formData) => {
+  const URL_BACKEND = `/v1/api/import-students`;
+  return axios.post(URL_BACKEND, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
 // ------------------------------------------------ API SUBJECT ------------------------------------------------
 const createSubject = (tenmh, tclt, tcth) => {
   const URL_BACKEND = `/v1/api/createmonhoc`;
@@ -169,6 +187,15 @@ const updateSubject = (mamh, tenmh, tclt, tcth) => {
 const deleteSubject = (mamh) => {
   const URL_BACKEND = `/v1/api/deletemonhoc/${mamh}`;
   return axios.delete(URL_BACKEND);
+};
+
+export const importSubjectFromExcel = (formData) => {
+  const URL_BACKEND = `/v1/api/import-subjects`;
+  return axios.post(URL_BACKEND, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 // ------------------------------------------------ API TEACHER ------------------------------------------------
@@ -203,6 +230,15 @@ const updateTeacher = (mgv, hoGV, tenGV, dt_gv, donVi) => {
 const deleteTeacher = (mgv) => {
   const URL_BACKEND = `/v1/api/deleteteacher/${mgv}`;
   return axios.delete(URL_BACKEND);
+};
+
+export const importTeacherFromExcel = (formData) => {
+  const URL_BACKEND = `/v1/api/import-teachers`;
+  return axios.post(URL_BACKEND, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 // ------------------------------------------------ API LOGIN ------------------------------------------------

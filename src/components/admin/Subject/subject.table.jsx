@@ -1,8 +1,13 @@
 import { Table, Button, Popconfirm, notification, Image } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
 import { useState } from "react";
 import { deleteSubject } from "../../../services/api.service";
 import UpdateSubject from "./update.subject";
+import ImportModal from "./ImportModal";
 
 const SubjectTable = (props) => {
   const {
@@ -16,6 +21,8 @@ const SubjectTable = (props) => {
   } = props;
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState(null);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
+
   const columns = [
     {
       title: "STT",
@@ -109,6 +116,15 @@ const SubjectTable = (props) => {
 
   return (
     <>
+      <div style={{ marginBottom: 16 }}>
+        <Button
+          icon={<UploadOutlined />}
+          type="primary"
+          onClick={() => setIsImportModalOpen(true)}
+        >
+          Import Excel
+        </Button>
+      </div>
       <Table
         columns={columns}
         dataSource={dataSubject}
@@ -127,6 +143,11 @@ const SubjectTable = (props) => {
         setIsUpdateModalOpen={setIsUpdateModalOpen}
         selectedSubject={selectedSubject}
         loadDataSubject={loadDataSubject}
+      />
+      <ImportModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        onSuccess={loadDataSubject}
       />
     </>
   );

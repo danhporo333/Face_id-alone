@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Table, Button, Popconfirm, notification, Image } from "antd";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { DeleteOutlined, UploadOutlined, EyeOutlined } from "@ant-design/icons";
 import StudentDetail from "./detail.student.jsx";
 import { deleteStudent } from "../../../services/api.service.js";
+import ImportModal from "./ImportModal.jsx";
 
 const StudentTable = (props) => {
   const {
@@ -17,6 +18,8 @@ const StudentTable = (props) => {
   const [dataDetail, setDataDetail] = useState(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   // const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
+
   const columns = [
     {
       title: "STT",
@@ -109,6 +112,15 @@ const StudentTable = (props) => {
 
   return (
     <>
+      <div style={{ marginBottom: 16 }}>
+        <Button
+          icon={<UploadOutlined />}
+          type="primary"
+          onClick={() => setIsImportModalOpen(true)}
+        >
+          Import Excel
+        </Button>
+      </div>
       <Table
         columns={columns}
         dataSource={datastudent}
@@ -119,14 +131,6 @@ const StudentTable = (props) => {
           pageSize: pageSize,
           showSizeChanger: false,
           total: total,
-          // showTotal: (total, range) => {
-          //   return (
-          //     <div>
-          //       {" "}
-          //       {range[0]}-{range[1]} trên {total} rows
-          //     </div>
-          //   );
-          // },
         }}
         onChange={onChange}
       />
@@ -136,6 +140,11 @@ const StudentTable = (props) => {
         isDetailOpen={isDetailOpen}
         setIsDetailOpen={setIsDetailOpen}
         loadDataStudent={loadDataStudent}
+      />
+      <ImportModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        onSuccess={loadDataStudent}
       />
     </>
   );

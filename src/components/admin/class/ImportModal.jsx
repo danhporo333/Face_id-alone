@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Upload, Button, message, Table, Alert, Checkbox } from "antd";
 import { InboxOutlined, DownloadOutlined } from "@ant-design/icons";
-import { importKhoaVienFromExcel } from "../../../services/api.service";
+import { importClassFromExcel } from "../../../services/api.service";
 import * as XLSX from "xlsx";
 
 const { Dragger } = Upload;
@@ -105,7 +105,7 @@ const ImportModal = ({ isOpen, onClose, onSuccess }) => {
       console.log("FormData entries:", Array.from(fd.entries()));
 
       console.log("Calling API...");
-      const response = await importKhoaVienFromExcel(fd);
+      const response = await importClassFromExcel(fd);
       console.log("API response:", response);
 
       const { errorCode, message: msg, data: result } = response || {};
@@ -158,7 +158,7 @@ const ImportModal = ({ isOpen, onClose, onSuccess }) => {
 
   return (
     <Modal
-      title="Import danh sách khoa viện"
+      title="Import danh sách sinh viên"
       open={isOpen}
       onCancel={handleClose}
       footer={[
