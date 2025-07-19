@@ -28,6 +28,7 @@ const pathToKey = (pathname) => {
   if (pathname.startsWith("/timetable")) return "timetable";
   if (pathname.startsWith("/room")) return "room";
   if (pathname.startsWith("/Lichday")) return "lichday";
+  if (pathname.startsWith("/register")) return "register";
   return "";
 };
 
@@ -96,6 +97,11 @@ const Navigation = ({ collapsed, setCollapsed }) => {
             key: "timetableAdminPage",
             icon: <BankOutlined />,
             label: <Link to={"/timetableAdminPage"}>Quản lý thời khóa biểu</Link>,
+          },
+          {
+            key: "register",
+            icon: <UserOutlined />,
+            label: <Link to={"/register"}>Đăng ký tài khoản SV_GV</Link>,
           },
           {
             label: `welcome ${user.username}`,

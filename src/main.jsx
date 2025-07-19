@@ -18,10 +18,11 @@ import TimetableTeacherPage from "./pages/teacher/lichday.teacher.jsx";
 import RoomPage from "./pages/admin/room.jsx";
 import TimetableDetailPage from "./pages/teacher/timetable-detail.jsx";
 import TimetableAdminPage from "./pages/admin/timetable.jsx";
+import RegisterPage from "./pages/admin/register.jsx";
 
 // Thêm các component tạm thời nếu chưa có
 const ErrorPage = () => <div>404 Not Found</div>;
-const RegisterPage = () => <div>Register Page</div>;
+// const RegisterPage = () => <div>Register Page</div>;
 
 const router = createBrowserRouter([
   {
@@ -90,6 +91,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/register",
+        element:(
+          <AdminRoute>
+            <RegisterPage />
+          </AdminRoute>
+        ),
+      },
+      {
         path: "/timetable",
         element: (
           <StudentRoute>
@@ -118,10 +127,6 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
-  },
-  {
-    path: "/register",
-    element: <RegisterPage />,
   },
 ]);
 

@@ -10,7 +10,6 @@ const UpdateSubject = (props) => {
     loadDataSubject,
   } = props;
   const [mamh, setMamh] = useState("");
-  console.log("selectedSubject", mamh);
   const [tenmh, setTenmh] = useState("");
   const [tclt, setTclt] = useState("");
   const [tcth, setTcth] = useState("");

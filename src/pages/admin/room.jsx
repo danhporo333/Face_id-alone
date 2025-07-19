@@ -22,7 +22,6 @@ const RoomPage = () => {
         setCurrent(res.data.meta.current);
         setPageSize(res.data.meta.pageSize);
         setTotal(res.data.meta.total);
-        console.log("Data phòng học:", res.data.rooms);
       }
     } catch (error) {
       console.error("Error loading room data:", error);
