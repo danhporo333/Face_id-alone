@@ -30,11 +30,13 @@ const TimetableDetail = ({
   isDetailOpen,
   setIsDetailOpen,
   selectedTimetable,
+  setSelectedTimetable,
 }) => {
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [statusText, setStatusText] = useState("Chưa khởi động");
   const [attendanceLoading, setAttendanceLoading] = useState(false);
   const [modelsLoaded, setModelsLoaded] = useState(false);
+  const [pollingInterval, setPollingInterval] = useState(null);
   const webcamRef = useRef(null);
   const intervalRef = useRef(null);
 

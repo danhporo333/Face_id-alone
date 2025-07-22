@@ -1,6 +1,6 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
-import dns from "dns";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import dns from 'dns';
 // https://vitejs.dev/config/server-options.html#server-options
 // dns.setDefaultResultOrder("verbatim");
 
@@ -12,19 +12,19 @@ import dns from "dns";
 //   },
 // })
 export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      "/v1/api": {
-        target: "http://localhost:8000",
-        changeOrigin: true,
-        secure: true,
-      },
-      "/image": {
-        target: "http://localhost:8000",
-        changeOrigin: true,
-        secure: true,
-      },
+    plugins: [react()],
+    server: {
+        proxy: {
+            '/v1/api': {
+                target: 'http://localhost:8000',
+                changeOrigin: true,
+                secure: true,
+            },
+            '/image': {
+                target: 'http://localhost:8000',
+                changeOrigin: true,
+                secure: true,
+            },
+        },
     },
-  },
 });

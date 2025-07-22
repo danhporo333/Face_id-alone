@@ -364,8 +364,8 @@ export const deleteTkb = (id) => {
 };
 
 // ======================================= API gán sinh viên vào thời khoá biểu =====================================
-const assignStudentToTkb = (tkbId, mssv) => {
-    const URL_BACKEND = `/v1/api/gan-sinh-vien`;
+const assignStudentToTkb = (mssv, tkbId) => {
+    const URL_BACKEND = `/v1/api/tkb/gan-sinh-vien`;
     const data = {
         mssv: mssv,
         tkbId: tkbId,
