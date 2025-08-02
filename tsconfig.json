@@ -1,0 +1,42 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "target": "es6",
+        "sourceMap": true,
+        "skipLibCheck": true,
+        "outDir": "dist",
+        "rootDir": "src",
+        "baseUrl": ".",
+        "paths": {
+            "config/*": ["./src/config/*"],
+            "controller/*": ["./src/controller/*"],
+            "models/*": ["./src/models/*"],
+            "routes/*": ["./src/routes/*"],
+            "Middleware/*": ["./src/Middleware/*"],
+            "services/*": ["./src/services/*"],
+            "utils/*": ["./src/utils/*"],
+            "views/*": ["./src/views/*"]
+        },
+
+        // Thêm các option này để tối ưu performance
+        "incremental": true,
+        "tsBuildInfoFile": ".tsbuildinfo"
+    },
+
+    // Phần này rất quan trọng - exclude các thư mục không cần thiết
+    "exclude": [
+        "node_modules",
+        "dist",
+        "build",
+        "uploads/**/*",
+        "public/**/*",
+        "**/*.test.ts",
+        "**/*.spec.ts",
+        ".git",
+        "*.log"
+    ],
+
+    // Chỉ include source code cần thiết
+    "include": ["src/**/*"]
+}

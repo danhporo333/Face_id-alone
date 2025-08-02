@@ -1,0 +1,137 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Bảng Khoa Viện
+model KhoaVien {
+  makv    String  @id @default(uuid())
+  tenkv   String
+  dtkv    String?
+  diaChi  String?
+  lop     Lop[]
+  @@map("khoaVien")
+}
+
+// Bảng Lớp
+model Lop {
+  malop   String  @id @default(uuid())
+  tenlop  String
+  siso    Int
+  makv    String
+  khoaVien KhoaVien @relation(fields: [makv], references: [makv], onDelete: Cascade)
+  sinhVien SV[]
+}
+
+// Bảng Sinh viên
+model SV {
+  mssv    String  @id @default(uuid())  // Mã số sinh viên
+  malop   String  // Mã lớp
+  holot   String  // Họ lót
+  ten     String  // Tên
+  ntns    DateTime // Ngày tháng năm sinh
+  phai    String  // Giới tính
+  dt_sv   String? // Điện thoại sinh viên
+  emailSV String? // Email sinh viên
+  faceID  String? // ID khuôn mặt
+
+  lop     Lop   @relation(fields: [malop], references: [malop], onDelete: Cascade) // Liên kết với Lớp
+  diemDanh DiemDanh[] // Quan hệ 1-N với Điểm danh
+  user    User?  @relation("SVToUser")
+  @@map("SV")
+}
+
+// Bảng Môn học
+model MonHoc {
+  mamh   String  @id @default(uuid())
+  tenmh  String
+  tclt   Int
+  tcth   Int
+  tkb    TKB[]
+}
+
+// Bảng Giảng viên
+model GV {
+  mgv    String  @id @default(uuid())
+  hoGV   String
+  tenGV  String
+  dt_gv  String?
+  donVi  String?
+  tkb    TKB[]
+  user   User?    @relation("GVToUser")
+}
+
+// Bảng Phòng học
+model Phong {
+  sop     String  @id @default(uuid())
+  tenPhong String
+  sucChua Int
+  coSo    String
+  tkb     TKB[]
+}
+
+// Bảng Thời khóa biểu
+model TKB {
+  id      String  @id @default(uuid())
+  thu     String
+  ngay    DateTime
+  tietBD  Int
+  tietKT  Int
+  mamh    String
+  mgv     String
+  sop     String
+  monHoc  MonHoc  @relation(fields: [mamh], references: [mamh], onDelete: Cascade)
+  giangVien GV   @relation(fields: [mgv], references: [mgv], onDelete: Cascade)
+  phong   Phong  @relation(fields: [sop], references: [sop], onDelete: Cascade)
+  isOpenAttendance    Boolean    @default(false)
+  diemDanh DiemDanh[]
+}
+
+// Bảng Điểm danh
+model DiemDanh {
+  mssv    String
+  id      String
+  coMat   Boolean
+  diTre   Boolean
+  lyDoKhac String?
+  faceID  String? // ID khuôn mặt để so khớp khi điểm danh bằng camera
+  sinhVien SV   @relation(fields: [mssv], references: [mssv], onDelete: Cascade)
+  tkb     TKB  @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  @@id([mssv, id]) // Composite primary key
+}
+
+// Bảng Người dùng (User) để phân quyền
+model   User {
+  id       String  @id @default(uuid())
+  email    String  
+  username String  
+  password String
+  role     Role    @default(ADMIN)   
+
+  sinhVien  SV?  @relation("SVToUser", fields: [mssv], references: [mssv])
+  giangVien GV?  @relation("GVToUser", fields: [mgv], references: [mgv])
+
+  mssv     String?  // Liên kết với SV (nếu là sinh viên)
+  mgv      String?  // Liên kết với GV (nếu là giảng viên)
+
+  @@unique([mssv])
+  @@unique([mgv])
+}
+
+enum Role {
+  ADMIN
+  TEACHER
+  STUDENT
+}
+

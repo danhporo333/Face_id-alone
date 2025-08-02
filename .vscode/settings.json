@@ -1,0 +1,43 @@
+{
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+
+    // Tăng memory cho TypeScript Server
+    "typescript.preferences.maxTsServerMemory": 8192,
+    "typescript.tsserver.maxTsServerMemory": 8192,
+
+    // Giảm tải cho IntelliSense
+    "typescript.suggest.autoImports": "off",
+    "typescript.updateImportsOnFileMove.enabled": "never",
+    "typescript.preferences.includePackageJsonAutoImports": "off",
+    "typescript.suggest.includeAutomaticOptionalChainCompletions": false,
+
+    // Exclude các thư mục không cần thiết
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/build": true,
+        "**/uploads": true,
+        "**/.git": true
+    },
+
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/build": true,
+        "**/uploads": true
+    },
+
+    // Tối ưu editor performance
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": false
+    },
+
+    // Giảm validation cho các file lớn
+    "typescript.validate.enable": true,
+    "javascript.validate.enable": true,
+    "typescript.surveys.enabled": false
+}

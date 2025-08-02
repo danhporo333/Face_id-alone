@@ -1,0 +1,8 @@
+node_modules
+dist
+.env
+
+# Export files
+exports/
+*.xlsx
+*.xls
