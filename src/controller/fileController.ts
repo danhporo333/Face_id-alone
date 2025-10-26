@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { uploadSingleFile } from 'services/fileService';
 import { fileUploadMiddleware, multipleFileUploadMiddleware } from '../Middleware/multer';
 import path from 'path';
 
